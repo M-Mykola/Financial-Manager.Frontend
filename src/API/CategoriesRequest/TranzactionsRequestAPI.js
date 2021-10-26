@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getTranzactions = async () => {
   return axios({
-    url: "https://beck33.herokuapp.com/Tranzactions/all",
+    url: "http://localhost:3200/Tranzactions/all",
     method: "GET",
   }).catch((error) => {
     console.log(error.response.data.error);
@@ -16,7 +16,7 @@ export const addNewTranzactions = async (
   description
 ) => {
   return axios({
-    url: "https://beck33.herokuapp.com/Tranzactions/",
+    url: "http://localhost:3200/Tranzactions/",
     data: {
       categories: categories,
       type_of_operation: type_of_operation,
@@ -38,7 +38,7 @@ export const updateTranzactions = async (
   id
 ) => {
   return axios({
-    url: "https://beck33.herokuapp.com/Tranzactions/" + id,
+    url: "http://localhost:3200/Tranzactions/" + id,
     data: {
       categories: categories,
       type_of_operation: type_of_operation,
@@ -53,7 +53,7 @@ export const updateTranzactions = async (
 };
 export const deleteTranzactions = async (id) => {
   return axios({
-    url: "https://beck33.herokuapp.com/Tranzactions/" + id,
+    url: "http://localhost:3200/Tranzactions/" + id,
     method: "DELETE",
   }).catch((error) => {
     console.log(error.response.data.error);
