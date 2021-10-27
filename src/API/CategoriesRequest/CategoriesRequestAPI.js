@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getCategories = async () => {
   return axios({
-    url: "http://localhost:3200/Category/all",
+    url: "https://demo-heroku-beck-end-deploy.herokuapp.com/Category/all",
     method: "GET",
   }).catch((error) => {
     console.log(error.response.data.error);
@@ -11,7 +11,7 @@ export const getCategories = async () => {
 
 export const updateCategories = async (categories, description, id) => {
   return axios({
-    url: "http://localhost:3200/Category/" + id,
+    url: "https://demo-heroku-beck-end-deploy.herokuapp.com/Category/" + id,
     data: {
       categories: categories,
       description: description,
@@ -24,7 +24,7 @@ export const updateCategories = async (categories, description, id) => {
 
 export const deleteCategories = async (id) => {
   return axios({
-    url: "http://localhost:3200/Category/" + id,
+    url: "https://demo-heroku-beck-end-deploy.herokuapp.com/Category/" + id,
     method: "DELETE",
   }).catch((error) => {
     console.log(error.response.data.error);
@@ -33,7 +33,7 @@ export const deleteCategories = async (id) => {
 
 export const addNewCategories = async (categories, description) => {
   return axios({
-    url: "http://localhost:3200/Category/",
+    url: "https://demo-heroku-beck-end-deploy.herokuapp.com/Category/",
     data: {
       categories: categories,
       description: description,
