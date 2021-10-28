@@ -2,6 +2,10 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import React, { useState } from "react";
 import { updateCategories } from "../API/CategoriesRequest/CategoriesRequestAPI";
+import {
+  isInvalidCategories,
+  isInvalidDescryption,
+} from "../Validation/validation";
 
 function AddEditCategories(data) {
   const getData = data.location.state.item;
@@ -12,16 +16,35 @@ function AddEditCategories(data) {
   const [value, setDefaultValue] = useState();
   const [valueOne, setDefaultValueOne] = useState();
 
+  const [categoriesErrorMessage, setCategoriesErrorMessage] = useState("");
+  const [descriptionErrorMessage, setDescriptionErrorMessage] = useState("");
+
+  const [categoriesHasError, setCategoriesErrorFlag] = useState(false);
+  const [descriptionErrorFlag, setDescriptionErrorFlag] = useState(false);
+
   const HandleChangeCategories = (event) => {
+    const categoriesValidation = isInvalidCategories(event.target.value);
+    if (categories && categoriesValidation) {
+      setCategoriesErrorFlag(true);
+      setCategoriesErrorMessage(categoriesValidation.errorMessage);
+    } else {
+      setCategoriesErrorMessage("");
+      setCategoriesErrorFlag(false);
+    }
     setCategories(event.target.value);
-    console.log(event.target.value);
   };
 
   const HandleChangeDescription = (event) => {
+    const descriptionValidation = isInvalidDescryption(event.target.value);
+    if (description && descriptionValidation) {
+      setDescriptionErrorFlag(true);
+      setDescriptionErrorMessage(descriptionValidation.errorMessage);
+    } else {
+      setDescriptionErrorMessage("");
+      setDescriptionErrorFlag(false);
+    }
     setDescription(event.target.value);
-    console.log(event.target.value);
   };
-
   const getAndUpdateCategories = async () => {
     try {
       const update = await updateCategories(
@@ -44,12 +67,13 @@ function AddEditCategories(data) {
       <div>
         {" "}
         <TextField
-          helperText={"Будь ласка введідть назву катугорії"}
           defaultValue={categoriesToSet}
           value={value}
           id="demo-helper-text-aligned"
           label="Категорія:"
           onChange={(e) => HandleChangeCategories(e)}
+          error={categoriesHasError}
+          helperText={categoriesErrorMessage}
         />{" "}
       </div>
       <div>
@@ -57,10 +81,11 @@ function AddEditCategories(data) {
         <TextField
           defaultValue={descriptionToSet}
           value={valueOne}
-          helperText="Будь ласка введідть короткий опис"
           id="demo-helper-text-aligned"
           label="Опис:"
           onChange={(e) => HandleChangeDescription(e)}
+          error={descriptionErrorFlag}
+          helperText={descriptionErrorMessage}
         />{" "}
       </div>
       <div>
